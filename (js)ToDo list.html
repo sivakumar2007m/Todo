@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Molle&display=swap" rel="stylesheet">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "poppins", sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            background-image: url(img/todo\ bg.jpg);
+            padding: 10px;
+            background-size: cover;
+        }
+
+        .todo-app {
+            width: 100%;
+            max-width: 540px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.123);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            margin: 100px auto 20px;
+            padding: 40px 30px 70px;
+            border-radius: 10px;
+        }
+
+        .todo-app h2 {
+            color: #00796b;
+            text-shadow: #000 0px 2px 5px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            justify-content: center;
+            font-size: 50px;
+
+             font-family: "Molle", cursive;
+  font-weight: 400;
+  font-style: italic;
+        }
+
+        .todo-app p {
+           font-family: "Molle", cursive;
+  font-weight: 400;
+  font-style: italic;
+
+
+            font-size: 25px;
+            color: #ef9a9a;
+            text-shadow: #000 0px 2px 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            margin-top: -20px;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .todo-app h2 img {
+            width: 30px;
+            margin-left: 10px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: black 0px 4px 8px;
+            backdrop-filter: blur(80px);
+            -webkit-backdrop-filter: blur(80px);
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+
+
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 10px;
+            color: aliceblue;
+            font-size: large;
+            font-family: "Protest Revolution", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            padding: 16px 50px;
+            cursor: pointer;
+            backdrop-filter: blur(80px);
+            -webkit-backdrop-filter: blur(80px);
+            background: linear-gradient(135deg, #607d8b, #b0bec5);
+
+            font-family: "Croissant One", serif;
+            font-weight: 400;
+            font-style: normal;
+
+            color: #000000;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 500;
+            box-shadow: black 0px 4px 5px;
+        }
+
+        ul li {
+            list-style: none;
+            font-size: 17px;
+            padding: 16px 15px 12px 40px;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+            color: #cfd8dc;
+            font-size: large;
+            font-family: "Protest Revolution", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-shadow: #000 0px 2px 5px;
+        }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background-image: url('img/uncheck.png');
+            background-size: cover;
+            background-position: center;
+            top: 12px;
+            left: 8px;
+        }
+
+        ul li.checked {
+            text-decoration: line-through;
+            color: #a0a0a0;
+        }
+
+        ul li.checked::before {
+            background-image: url('img/check.png');
+        }
+
+        ul li span {
+            position: absolute;
+            right: 0;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            color: #e74c3c;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            text-shadow: none;
+        }
+
+        ul li span:hover {
+            backdrop-filter: blur(80px);
+            -webkit-backdrop-filter: blur(80px);
+            background: rgba(255, 255, 255, 0.123);
+            color: #ff3a3a;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="todo-app">
+            <h2 style="text-align: center;">To-Do List<img src="img/todo icon.png"></h2>
+            <p id="date" style="text-align: center;   "></p>
+            <script>
+                // Display today's date
+                const dateElement = document.getElementById('date');
+                const today = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateElement.textContent = today.toLocaleDateString(undefined, options);
+            </script>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Today's plan...">
+                <button onclick="addTask()">Add</button>
+            </div>
+            <ul id="list-container">
+                <!--  <li class="checked">Task 1</li>
+                <li>Task 2</li>
+                <li>Task 3</li>-->
+            </ul>
+        </div>
+    </div>
+    <script>
+        const inputBox = document.getElementById('input-box');
+        const listContainer = document.getElementById('list-container');
+
+        function addTask() {
+            if (inputBox.value === '') {
+                alert('Please enter a task!');
+            } else {
+                const li = document.createElement('li');
+                li.textContent = inputBox.value;
+                listContainer.appendChild(li);
+
+                // Create a span element for the delete icon
+                let span = document.createElement('span');
+                span.innerHTML = '\u00d7'; // Unicode for multiplication sign (×)
+                li.appendChild(span);
+            }
+            inputBox.value = '';
+            saveData();
+        }
+        listContainer.addEventListener('click', function (e) {
+            if (e.target.tagName === 'LI') {
+                e.target.classList.toggle('checked');
+                saveData();
+            } else if (e.target.tagName === 'SPAN') {
+                e.target.parentElement.remove();
+                saveData();
+            }
+        }, false);
+        function saveData() {
+            localStorage.setItem("data", listContainer.innerHTML);
+        }
+        function showTask() {
+            listContainer.innerHTML = localStorage.getItem("data");
+        }
+        showTask();
+
+    </script>
+</body>
+
+</html>
